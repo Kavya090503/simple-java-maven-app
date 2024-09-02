@@ -29,11 +29,21 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
+      stage('Deliver') {
+    steps {
+        script {
+            // Print the current directory for debugging
+            sh 'pwd'
+            // List files in the scripts directory
+            sh 'ls -al ./jenkins/scripts/'
+            // Print the contents of the deliver.sh script for debugging
+            sh 'cat ./jenkins/scripts/deliver.sh'
         }
+        // Run the deliver script
+        sh './jenkins/scripts/deliver.sh'
+    }
+}
+
     }
     post {
         success {
