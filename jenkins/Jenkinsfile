@@ -1,55 +1,30 @@
-pipeline {
-    agent any
-    environment {
-        // Reference to the Maven tool configured in Jenkins
-        MAVEN_HOME = tool name: 'Maven3' // Ensure this matches the name in the configuration
-    }
-    stages {
-        stage('Build') {
+pipeline{
+     agent any
+     stages{
+        stage("Stage 1"){
             steps {
-                script {
-                    // Debug Maven version and path
-                    sh "${MAVEN_HOME}/bin/mvn -v"
-                    // Print current directory
-                    sh 'pwd'
-                    // List files in the workspace
-                    sh 'ls -al'
-                }
-                // Run Maven build
-                sh "${MAVEN_HOME}/bin/mvn -B -DskipTests clean package"
+            echo "This is stage 1"
             }
         }
-        stage('Test') {
+        stage("Stage 2"){
             steps {
-                sh "${MAVEN_HOME}/bin/mvn test"
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+            echo "This is stage 2"
             }
         }
-        stage('Deliver') {
+        stage("Stage 3"){
             steps {
-                script {
-                    // Print the current directory for debugging
-                    sh 'pwd'
-                    // List files in the scripts directory
-                    sh 'ls -al ./jenkins/scripts/'
-                    // Print the contents of the deliver.sh script for debugging
-                    sh 'cat ./jenkins/scripts/deliver.sh'
-                }
-                // Run the deliver script
-                sh './jenkins/scripts/deliver.sh'
+            echo "This is stage 3"
             }
         }
-    }
-    post {
-        success {
-            echo 'Build, Test, and Delivery were successful!'
+        stage("Stage 4"){
+            steps {
+            echo "This is stage 4"
+            }
         }
-        failure {
-            echo 'Build failed. Check the logs for more details.'
+        stage("Stage 5"){
+            steps {
+            echo "This is stage 5"
+            }
         }
-    }
+     }
 }
